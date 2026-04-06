@@ -10,10 +10,12 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
 } from "react-native";
 import { Stack, router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { supabase } from "../lib/supabase";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type FormData = {
   fullName: string;
@@ -241,8 +243,12 @@ export default function NewArrivalScreen() {
     <>
       <Stack.Screen
         options={{
-          title: "Register New Arrival",
+          headerShown: true,
+          title: "",
           headerBackTitle: "Back",
+          headerStyle: { backgroundColor: "#FAFAFE" },
+          headerShadowVisible: false,
+          headerTintColor: "#7C3AED",
         }}
       />
 
@@ -251,17 +257,18 @@ export default function NewArrivalScreen() {
         className="flex-1"
       >
         <ScrollView
-          className="flex-1 bg-white"
+          className="flex-1"
+          style={{ backgroundColor: "#FAFAFE" }}
           contentContainerStyle={{ paddingBottom: 40 }}
           keyboardShouldPersistTaps="handled"
         >
           {/* Hero section */}
-          <View className="px-5 pt-4 pb-6">
-            <Text className="text-2xl font-bold text-gray-900 tracking-tight">
-              New Arrival Registration
+          <View className="px-5 pt-2 pb-6">
+            <Text style={{ fontSize: 26, fontWeight: "800", color: "#101828", letterSpacing: -0.5 }}>
+              New Arrival
             </Text>
-            <Text className="text-sm text-gray-500 mt-1">
-              Capture the individual&apos;s details and verification photo.
+            <Text style={{ fontSize: 14, color: "#667085", marginTop: 4, fontWeight: "500" }}>
+              Capture details and verification photo
             </Text>
           </View>
 
@@ -527,9 +534,18 @@ export default function NewArrivalScreen() {
             <Pressable
               onPress={handleSubmit}
               disabled={submitting}
-              className={`h-14 rounded-2xl items-center justify-center ${
-                submitting ? "bg-primary-300" : "bg-primary-600 active:bg-primary-700"
-              }`}
+              style={({ pressed }) => ({
+                height: 56,
+                borderRadius: 18,
+                alignItems: "center" as const,
+                justifyContent: "center" as const,
+                backgroundColor: submitting ? "#C4B5FD" : pressed ? "#6D28D9" : "#7C3AED",
+                shadowColor: "#7C3AED",
+                shadowOffset: { width: 0, height: 8 },
+                shadowOpacity: 0.3,
+                shadowRadius: 16,
+                elevation: 4,
+              })}
             >
               {submitting ? (
                 <View className="flex-row items-center gap-2">
